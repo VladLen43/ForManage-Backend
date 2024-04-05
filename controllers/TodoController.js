@@ -36,7 +36,8 @@ export const create = async (req, res) => {
         const doc = new TodoModel({
             title: req.body.title,
             imageUrl: req.body.imageUrl,
-            user: req.userId
+            user: req.userId,
+            checked: ''
         }) 
 
         const todo = await doc.save();
@@ -58,36 +59,40 @@ export const update = async (req, res) => {
     },{
         title: req.body.title,
         imageUrl: req.body.imageUrl,
-        user: req.userId
+        user: req.userId,
     },)
     res.json({
         success: true,
     })
 }
 
-export const deleteOneTodo = async (req, res) => {
-
-    const todoId = req.id;
-
-    await TodoModel.findOneAndDelete({
-        _id: todoId,
-    }, (err, doc) => {
-
-        if(err){
-        console.log(err);
-        res.status(500).json({
-            message: 'Не удалось удалить todo'
+export const remove = async (req, res) => {
+      const postId = req.params.id;
+  
+      TodoModel.findOneAndDelete(
+        {
+          _id: postId,
+        }).then((doc, err) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                  message: 'Не удалось удалить статью',
+                });
+              }
+      
+              if (!doc) {
+                return res.status(404).json({
+                  message: 'Статья не найдена',
+                });
+              }
+      
+              res.json({
+                success: true,
+              });
+        }).catch((reject) => {
+            console.log(reject);
+            res.status(500).json({
+              message: 'Не удалось получить статьи',
+            });
         })
-     }
-
-     if(!doc) {
-        return res.status(404).json({
-            message: 'Todo не найдена'
-        })
-     }
-
-     res.json({
-        success: true
-     })
-})
-}
+  };

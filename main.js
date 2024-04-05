@@ -38,6 +38,6 @@ app.get('/todos', TodoController.getAllTodos)
 
 app.get('/todos/:id', TodoController.getOneTodo)
 
-app.delete('/todos/:id',isAuth, TodoController.deleteOneTodo)
+app.delete('/todos/:id', isAuth, TodoController.remove)
 
 app.patch('/todos/:id', isAuth, TodoController.update)
