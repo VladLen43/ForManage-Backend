@@ -67,22 +67,22 @@ export const update = async (req, res) => {
 }
 
 export const remove = async (req, res) => {
-      const postId = req.params.id;
+      const todoId = req.params.id;
   
       TodoModel.findOneAndDelete(
         {
-          _id: postId,
+          _id: todoId,
         }).then((doc, err) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({
-                  message: 'Не удалось удалить статью',
+                  message: 'Не удалось удалить todo',
                 });
               }
       
               if (!doc) {
                 return res.status(404).json({
-                  message: 'Статья не найдена',
+                  message: 'Todo не найдена',
                 });
               }
       
@@ -92,7 +92,7 @@ export const remove = async (req, res) => {
         }).catch((reject) => {
             console.log(reject);
             res.status(500).json({
-              message: 'Не удалось получить статьи',
+              message: 'Не удалось получить todo',
             });
         })
   };
