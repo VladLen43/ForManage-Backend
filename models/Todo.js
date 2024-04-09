@@ -6,6 +6,7 @@ const TodoSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    completed: mongoose.Schema.Types.Boolean,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

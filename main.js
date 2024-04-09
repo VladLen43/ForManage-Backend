@@ -34,7 +34,7 @@ app.get('/auth/me', isAuth, UserController.getMe)
 
 app.post('/todos', isAuth, TodoCreateValidation, TodoController.create);
 
-app.get('/todos', TodoController.getAllTodos)
+app.get('/todos',isAuth, TodoController.getAllTodos)
 
 app.get('/todos/:id', TodoController.getOneTodo)
 

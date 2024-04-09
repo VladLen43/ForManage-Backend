@@ -1,9 +1,13 @@
+import { reverse } from 'dns';
 import TodoModel from '../models/Todo.js';
 
 
 export const getAllTodos = async (req, res) => {
     try {
-        const todos = await TodoModel.find().populate('user').exec()
+
+        const user = req.userId
+        const todos = await TodoModel.find({user : user})//.populate('user').exec()
+        console.log(user)
         res.json(todos);
     } catch (error) {
         console.log(error);
@@ -15,13 +19,11 @@ export const getAllTodos = async (req, res) => {
 
 export const getOneTodo = async (req, res) => {
     try {
-        const todoId = req.params.id;
+        const user = req.user;
 
-         await TodoModel.findOneById(todoId)
-
-        res.json({
-            success: true,
-        })
+         const todos = await TodoModel.find({userId: user})
+        console.log(user)
+        res.json(todos)
         
     } catch (error) {
         console.log(error);
@@ -32,24 +34,25 @@ export const getOneTodo = async (req, res) => {
 }
 
 export const create = async (req, res) => {
-     try {
-        const doc = new TodoModel({
-            title: req.body.title,
-            imageUrl: req.body.imageUrl,
-            user: req.userId,
-            checked: ''
-        }) 
+    try {
+       const doc = new TodoModel({
+           title: req.body.title,
+           imageUrl: req.body.imageUrl,
+           user: req.userId,
+           completed: false
+       }) 
 
-        const todo = await doc.save();
+       const todo = await doc.save();
 
-        res.json(todo);
-     } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            message: 'Не удалось создать Дело'
-        })
-     }
+       res.json(todo);
+    } catch (error) {
+       console.log(error);
+       res.status(500).json({
+           message: 'Не удалось создать Дело'
+       })
+    }
 }
+
 
 // export const update = async (req, res) => {
     
@@ -90,9 +93,11 @@ export const create = async (req, res) => {
 
 // 
 export const update = async (req, res) => {
-    const postId = req.params.id;
+    const todoId = req.params.id;
+    const comp  = req.body.completed
+    console.log(comp)
     TodoModel.findOneAndUpdate(
-        { _id: postId } ,{ title: 't'},{ returnDocument: "After" } )
+        { _id: todoId } ,{ completed : true },{ returnDocument: "After" } )
         .then(doc => res.json(doc))
         .catch(err => res.status(500).json({ message: "Статья не найдена" }))    
   };
