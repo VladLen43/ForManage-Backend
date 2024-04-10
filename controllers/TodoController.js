@@ -94,10 +94,10 @@ export const create = async (req, res) => {
 // 
 export const update = async (req, res) => {
     const todoId = req.params.id;
-    const comp  = req.body.completed
+    const comp = req.body.completed;
     console.log(comp)
     TodoModel.findOneAndUpdate(
-        { _id: todoId } ,{ completed : true },{ returnDocument: "After" } )
+        { _id: todoId } ,{ completed : comp },{ returnDocument: "After" } )
         .then(doc => res.json(doc))
         .catch(err => res.status(500).json({ message: "Статья не найдена" }))    
   };
