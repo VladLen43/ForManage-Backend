@@ -34,7 +34,7 @@ export const getOneTodo = async (req, res) => {
 }
 
 export const create = async (req, res) => {
-    try {
+    try {      
        const doc = new TodoModel({
            title: req.body.title,
            imageUrl: req.body.imageUrl,
@@ -45,6 +45,7 @@ export const create = async (req, res) => {
        const todo = await doc.save();
 
        res.json(todo);
+    
     } catch (error) {
        console.log(error);
        res.status(500).json({
