@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import { TodoCreateValidation, registerValidation } from "./validations/auth.js";
 import isAuth from './utils/checkAuth.js'
 import cors from 'cors'
+import multer from "multer";
+import fs from "fs";
 
 mongoose.connect(
     'mongodb+srv://vladbogdan39:435679@cluster1.byfkbgw.mongodb.net/LoginTest?retryWrites=true&w=majority&appName=Cluster1'
@@ -16,6 +18,20 @@ const app = express();
 app.use(express.json());
 app.use(cors())
 
+const storage = multer.diskStorage({
+    destination: (_, __, cb) => {
+      if (!fs.existsSync('uploads')) {
+        fs.mkdirSync('uploads');
+      }
+      cb(null, 'uploads');
+    },
+    filename: (_, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
+  
+  const upload = multer({ storage });
+
 app.listen(4444, (err) => {
     if (err) {
         console.error(err);
@@ -23,6 +39,8 @@ app.listen(4444, (err) => {
 
     console.log("OK")
 })
+
+app.use('/uploads', express.static('uploads'));
 
 
 
@@ -36,8 +54,14 @@ app.post('/todos', isAuth, TodoCreateValidation, TodoController.create);
 
 app.get('/todos',isAuth, TodoController.getAllTodos)
 
-app.get('/todos/:id', TodoController.getOneTodo)
+app.get('/todos/:id', isAuth, TodoController.getOneTodo)
 
 app.delete('/todos/:id', isAuth, TodoController.remove)
 
 app.patch('/todos/:id', isAuth, TodoController.update)
+
+app.post('/upload', isAuth, upload.single('image'), (req, res) => {
+    res.json({
+      url: `/uploads/${req.file.originalname}`,
+    });
+  });

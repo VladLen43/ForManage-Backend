@@ -11,6 +11,15 @@ const TodoSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
+
+    text: {
+        type: String,
+        required: true,
+    },
+    tags: {
+        type: Array,
+        default: [],
+    },
         imageUrl: {
             type: String,
         }

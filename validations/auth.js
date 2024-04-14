@@ -15,4 +15,6 @@ export const loginValidation = [
 export const TodoCreateValidation = [
     body('title', 'Укажите название задачи').isLength({min: 4}),
     body('imageUrl', 'Укажите ссылку на изображение').optional().isString(),
+    body('text', 'Укажите text').isLength({min: 5}),
+    body('tags', 'Неверный формат тегов').optional().isLength({min: 4}),
 ]
