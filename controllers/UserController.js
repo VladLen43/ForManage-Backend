@@ -107,3 +107,18 @@ export const getMe =  async (req, res) => {
         })
     }
 }
+
+export const updateMe = async (req, res) => {
+
+        UserModel.findOneAndUpdate(
+            {  _id: req.params.id, },
+            { fullName: req.body.fullName, avatarUrl: req.body.avatarUrl },
+            { returnDocument: "After"}).then((doc) => {
+                res.json(doc)
+            }).catch((err) => {
+                res.status(500).json({
+                    message: "Ошибка обновления данных пользователя"
+                });
+                console.log(err);
+            })
+}

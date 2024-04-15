@@ -50,6 +50,8 @@ app.post('/auth/login', UserController.login )
 
 app.get('/auth/me', isAuth, UserController.getMe)
 
+app.patch('/auth/me/:id', isAuth, UserController.updateMe)
+
 app.post('/todos', isAuth, TodoCreateValidation, TodoController.create);
 
 app.get('/todos',isAuth, TodoController.getAllTodos)
