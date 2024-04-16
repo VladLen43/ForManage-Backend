@@ -36,8 +36,8 @@ export const getOneTodo = async (req, res) => {
     try {
       const todoId = req.params.id;
   
-      TodoModel.find(
-        { _id: todoId } )
+      TodoModel.findOneAndUpdate(
+        { _id: todoId } ,{ returnDocument: "After" } )
         .then(doc => res.json(doc))
         .catch(err => res.status(500).json({ message: "Статья не найдена" }))    
   } catch (err) {
