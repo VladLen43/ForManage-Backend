@@ -53,7 +53,8 @@ export const create = async (req, res) => {
            user: req.userId,
            completed: false,
            tags: req.body.tags,
-           text: req.body.text
+           text: req.body.text,
+           priority: req.body.priority
        }) 
 
        const todo = await doc.save();
@@ -111,11 +112,12 @@ export const update = async (req, res) => {
     const todoId = req.params.id;
     const comp = req.body.completed;
     const tag = req.body.tags;
+    const priority = req.body.priority;
 
     console.log(req)
     TodoModel.findOneAndUpdate(
         { _id: todoId } ,
-        { completed : comp, title: req.body.title, text: req.body.text, imageUrl: req.body.imageUrl, tags: tag  },
+        { completed : comp, title: req.body.title, text: req.body.text, imageUrl: req.body.imageUrl, tags: tag, priority: priority  },
         { returnDocument: "After" } )
         .then(doc => res.json(doc))
         .catch(err => res.status(500).json({ message: "Статья не найдена" }))    

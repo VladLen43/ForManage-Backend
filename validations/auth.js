@@ -17,4 +17,5 @@ export const TodoCreateValidation = [
     body('imageUrl', 'Укажите ссылку на изображение').optional().isString(),
     body('text', 'Укажите text').isLength({min: 5}),
     body('tags', 'Неверный формат тегов').optional().isLength({min: 4}),
+    body('priority', 'Неверно выставлен приоритет').isNumeric(),
 ]

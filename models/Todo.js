@@ -20,6 +20,9 @@ const TodoSchema = new mongoose.Schema({
         type: Array,
         default: [],
     },
+    priority:{
+        type: Number,
+    },
         imageUrl: {
             type: String,
         }
