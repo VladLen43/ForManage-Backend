@@ -7,6 +7,7 @@ import isAuth from './utils/checkAuth.js'
 import cors from 'cors'
 import multer from "multer";
 import fs from "fs";
+import Todo from "./models/Todo.js";
 
 mongoose.connect(
     'mongodb+srv://vladbogdan39:435679@cluster1.byfkbgw.mongodb.net/LoginTest?retryWrites=true&w=majority&appName=Cluster1'
@@ -59,6 +60,8 @@ app.get('/todos',isAuth, TodoController.getAllTodos)
 app.get('/todos/:id', isAuth, TodoController.getOneTodo)
 
 app.delete('/todos/:id', isAuth, TodoController.remove)
+
+app.post('/todos/sortByName', isAuth, TodoController.sortByName)
 
 app.patch('/todos/:id', isAuth, TodoController.update)
 

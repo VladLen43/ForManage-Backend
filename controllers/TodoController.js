@@ -123,6 +123,15 @@ export const update = async (req, res) => {
         .catch(err => res.status(500).json({ message: "Статья не найдена" }))    
   };
 
+export const sortByName = async (req, res) => {
+    const user = req.body.user;
+    const sortType = req.body.sortType
+    TodoModel.find({user : user}).sort({title: sortType})
+    .then(doc => res.json(doc))
+        .catch(err => res.status(500).json({ message: "Статья не найдена" })) 
+}
+
+
 export const remove = async (req, res) => {
       const todoId = req.params.id;
   
