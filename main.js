@@ -63,6 +63,12 @@ app.delete('/todos/:id', isAuth, TodoController.remove)
 
 app.post('/todos/sortByName', isAuth, TodoController.sortByName)
 
+app.post('/todos/sortDefault', isAuth, TodoController.sortDefault)
+
+app.post('/todos/sortByDate', isAuth, TodoController.sortByDate)
+
+// app.post('/todos/sortByDateDefault', isAuth, TodoController.sortByDateDefault)
+
 app.patch('/todos/:id', isAuth, TodoController.update)
 
 app.post('/upload', isAuth, upload.single('image'), (req, res) => {

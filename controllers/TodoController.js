@@ -120,17 +120,40 @@ export const update = async (req, res) => {
         { completed : comp, title: req.body.title, text: req.body.text, imageUrl: req.body.imageUrl, tags: tag, priority: priority  },
         { returnDocument: "After" } )
         .then(doc => res.json(doc))
-        .catch(err => res.status(500).json({ message: "Статья не найдена" }))    
+        .catch(err => res.status(500).json({ message: "Todo не найдена" }))    
   };
 
 export const sortByName = async (req, res) => {
-    const user = req.body.user;
-    const sortType = req.body.sortType
-    TodoModel.find({user : user}).sort({title: sortType})
+    const  user =  req.body.user;
+    const sortType = req.body.sortType;
+    
+      await TodoModel.find({user:user}).sort({title: sortType})
     .then(doc => res.json(doc))
-        .catch(err => res.status(500).json({ message: "Статья не найдена" })) 
+        .catch(err => res.status(500).json({ message: "Todo не найдена" })) 
+}
+export const sortDefault = async (req, res) => {
+    const user = req.body.user;
+
+    await TodoModel.find({user:user}).sort({$natural: 1})
+  .then(doc => res.json(doc))
+    .catch(err => res.status(500).json({ message: "Todo не найдена" })) 
 }
 
+export const sortByDate = async (req, res) => {
+  const  user =  req.body.user;
+  const sortType = req.body.sortType;
+  
+    await TodoModel.find({user:user}).sort({createdAt: sortType})
+  .then(doc => res.json(doc))
+      .catch(err => res.status(500).json({ message: "Todo не найдена" })) 
+}
+export const sortByDateDefault = async (req, res) => {
+  const user = req.body.user;
+
+  await TodoModel.find({user:user}).sort({$natural: 1})
+.then(doc => res.json(doc))
+  .catch(err => res.status(500).json({ message: "Todo не найдена" })) 
+}
 
 export const remove = async (req, res) => {
       const todoId = req.params.id;
