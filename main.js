@@ -67,7 +67,7 @@ app.post('/todos/sortDefault', isAuth, TodoController.sortDefault)
 
 app.post('/todos/sortByDate', isAuth, TodoController.sortByDate)
 
-// app.post('/todos/sortByDateDefault', isAuth, TodoController.sortByDateDefault)
+app.post('/todos/sortByDateDefault', isAuth, TodoController.sortByDateDefault)
 
 app.patch('/todos/:id', isAuth, TodoController.update)
 
